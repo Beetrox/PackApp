@@ -1,0 +1,41 @@
+Appnamn: PackApp
+
+Appidé:
+En packlisteapp för de som behöver vara säkra på att de fått med allt.
+
+Beskrivning:
+“Så” frågar du dig själv, “varför ska jag välja appname över andra packlisteappar?” Appname är unik i att den låter dig ta bort de saker du inte behöver från listan istället för att lägga till nya inför varje resa vilket resulterar i att du aldrig kommer missa något!
+Listorna bygger på att du gör en baslista med allt du kan tänka dig behöva på en resa för att sedan skapa kopior där du enkelt tar bort allt som är irrelevant för just denna resa. Dessutom kommer appname påminna dig om du glömt packa något när det är dags för avresa.
+
+Funktioner:
+Skapa en grundlista som innehåller ALLT och som sedan går att kopiera för att veta att man alltid tagit ställning till allt man kan tänkas vilja ha med.
+I grundlistan får man själv skriva in allt och sortera det i kategorier. Appen ger inga förslag.
+I den kopierade listan tar man bort det som inte är relevant under denna resan och lägger sedan till antal av det man ska ha med.
+Sakerna som ska med finns under olika kategorier, förslag;
+Kläder, hygienartiklar, elektronik, övrigt.
+Clothes, toiletries, electronics, miscellaneous.
+I vyn av listan kan man swipa i sidled för att se de olika kategorierna.
+Trycka och hålla in på ett item för att ändra eller ta bort.
+Finns tre stadier när man packar;
+Inget (rött), framplockat (gult), packat (grönt).
+Börjar som rött, en tap blir gult, nästa blir grönt.
+När man skapar en ny kopia av listan får man döpa den och välja när man vill ha en check att allt är packat.
+Är något fortfarande rött eller gult vid tiden för notifikationen kommer den att påminna att packa det.
+
+Scenario:
+Starta på mina listor
+Skapa grundlista med allt du kan tänka dig
+Gör kopia
+Skriv in resmål och tid du vill ha påminnelse
+Ta bort allt du inte ska ha med från kopian och lägg till antal av allt du vill ha med
+Kryssa för när du lagt fram och lagt ner
+En tap blir gul, nästa blir grön
+På edit kan man resetta till röd
+Om något fortfarande är opackat vid tiden för notifikationen så kommer en påminnelse
+
+On long press
+Edit, delete, reset (share?)
+
+Teknologi:
+Lagring
+Notifications
