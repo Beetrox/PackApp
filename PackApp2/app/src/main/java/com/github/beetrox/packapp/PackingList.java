@@ -6,7 +6,7 @@ package com.github.beetrox.packapp;
 
 public class PackingList {
 
-    public String name;
+    private String name;
 
     public PackingList(String name) {
         this.name = name;

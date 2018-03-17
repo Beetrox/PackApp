@@ -11,7 +11,7 @@ public class ListItem {
     private String status;
     private int amount;
 
-    public ListItem(String name, String category) {
+    public ListItem(String name, int amount) {
         this.name = name;
         this.category = category;
         this.status = "red";

@@ -25,10 +25,18 @@ public class MainActivity extends AppCompatActivity {
 
         PackingListRecyclerAdapter packingListRecyclerAdapter = new PackingListRecyclerAdapter(createFakePackingLists());
         packingListRecyclerView.setAdapter(packingListRecyclerAdapter);
+
+
+        //ListItemRecyclerAdapter listItemRecyclerAdapter = new ListItemRecyclerAdapter(createFakeListItems());
+        //packingListRecyclerView.setAdapter(listItemRecyclerAdapter);
     }
 
     public void floatingActionButtonPressed(View view) {
         Log.d("FAB", "Pressed");
+    }
+
+    public void packingListPressed(View view) {
+        Log.d("Packing List", "Pressed");
     }
 
     public List<PackingList> createFakePackingLists() {
@@ -45,4 +53,21 @@ public class MainActivity extends AppCompatActivity {
 
         return packingLists;
     }
+
+    /*
+    public List<ListItem> createFakeListItems() {
+
+        List<ListItem> listItems = new ArrayList<ListItem>();
+
+        ListItem listItem1 = new ListItem("list item 1", 1);
+        ListItem listItem2 = new ListItem("list item 2", 3);
+        ListItem listItem3 = new ListItem("list item 3", 7);
+
+        listItems.add(listItem1);
+        listItems.add(listItem2);
+        listItems.add(listItem3);
+
+        return listItems;
+    }
+    */
 }

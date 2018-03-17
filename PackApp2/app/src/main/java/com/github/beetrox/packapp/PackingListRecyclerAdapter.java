@@ -27,9 +27,9 @@ public class PackingListRecyclerAdapter extends RecyclerView.Adapter<PackingList
     }
 
     @Override
-    public void onBindViewHolder(PackingListViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(PackingListViewHolder packingListViewHolder, int i) {
         PackingList pl = packingLists.get(i);
-        myViewHolder.vName.setText(pl.name);
+        packingListViewHolder.vName.setText(pl.getName());
     }
 
     @Override
@@ -48,7 +48,7 @@ public class PackingListRecyclerAdapter extends RecyclerView.Adapter<PackingList
         public PackingListViewHolder(View v) {
             //make constructor
             super(v);
-            vName = (TextView) v.findViewById(R.id.itemName);
+            vName = (TextView) v.findViewById(R.id.listItemName);
         }
     }
 
