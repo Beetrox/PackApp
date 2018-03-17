@@ -1,11 +1,12 @@
+package com.github.beetrox.packapp;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.github.beetrox.packapp.R;
-
-import java.util.zip.Inflater;
+import java.util.List;
 
 /**
  * Created by Owner on 09/03/2018.
@@ -13,32 +14,43 @@ import java.util.zip.Inflater;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
-    private View inflater;
+    protected TextView vName;
+    ViewGroup viewGroup;
 
-    public RecyclerAdapter() {
-        //make constructor
-    }
+    private List<PackingList> packingListList;
 
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater = inflater.inflate(R.layout.packing_list_card, parent, false);
-        MyViewHolder holder = new MyViewHolder(view);
-        return holder;
+
+    public RecyclerAdapter(List<PackingList> packingList) {
+        this.packingListList = packingList;
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return packingListList.size();
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder myViewHolder, int i) {
+        PackingList pl = packingListList.get(i);
+        myViewHolder.vName.setText(pl.name);
+    }
 
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View itemView = LayoutInflater.from(viewGroup.getContext()).
+                inflate(R.layout.packing_list_card, viewGroup, false);
+
+        return new MyViewHolder(itemView);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        public MyViewHolder(View itemView) {
-            super(itemView);
+
+        public MyViewHolder(View v) {
+            //make constructor
+            super(v);
+            vName = (TextView) v.findViewById(R.id.itemName);
         }
     }
+
 }
