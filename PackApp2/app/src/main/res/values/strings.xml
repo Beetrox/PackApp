@@ -1,3 +1,26 @@
 <resources>
+
     <string name="app_name">PackApp</string>
+    <string name="add">Add</string>
+    <string name="delete">Delete</string>
+    <string name="share">Share</string>
+    <string name="edit">Edit</string>
+    <string name="ok">OK</string>
+    <string name="name">Name</string>
+
+    <string name="myPackingLists">My packing lists</string>
+    <string name="myBaseLists">My base lists</string>
+    <string name="createList">Create list</string>
+    <string name="addItem">Add item</string>
+    <string name="listName">List name</string>
+    <string name="editReminder">Edit reminder</string>
+    <string name="amount">Amount</string>
+
+    <string-array name="categoriesArray">
+        <item>Miscellaneous</item>
+        <item>Clothes</item>
+        <item>Toiletries</item>
+        <item>Electronics</item>
+    </string-array>
+
 </resources>

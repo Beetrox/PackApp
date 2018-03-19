@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PackApp</string>
+    <string name="add">Lägg till</string>
+    <string name="delete">Ta bort</string>
+    <string name="share">Dela</string>
+    <string name="edit">Ändra</string>
+    <string name="ok">OK</string>
+    <string name="name">Namn</string>
+
+    <string name="myPackingLists">Mina packlistor</string>
+    <string name="myBaseLists">Mina baslistor</string>
+    <string name="createList">Skapa lista</string>
+    <string name="addItem">Lägg till artikel</string>
+    <string name="listName">Listans namn</string>
+    <string name="editReminder">Ändra påminnelse</string>
+    <string name="amount">Antal</string>
+
+    <string-array name="categoriesArray">
+        <item>Övrigt</item>
+        <item>Kläder</item>
+        <item>Toalettartiklar</item>
+        <item>Elektronik</item>
+    </string-array>
+
+</resources>
