@@ -39,3 +39,6 @@ Edit, delete, reset (share?)
 Teknologi:
 Lagring
 Notifications
+
+Trello:
+https://trello.com/b/SW5jjH2P/packlisteapp 
