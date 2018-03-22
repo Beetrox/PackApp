@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "720786017913",
+    "firebase_url": "https://packapp-ffad6.firebaseio.com",
+    "project_id": "packapp-ffad6",
+    "storage_bucket": "packapp-ffad6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720786017913:android:74880c8878073b38",
+        "android_client_info": {
+          "package_name": "com.github.beetrox.packapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720786017913-42ndob0o0tpqn92vfrmpspvte3r4cdl9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.beetrox.packapp",
+            "certificate_hash": "c63de5b361242934baf0e73ae0fce90cac739d1e"
+          }
+        },
+        {
+          "client_id": "720786017913-fm1hdbuquj2sj2k0htavum5mtnk0lu33.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtrc0sTAqj-BjGkmWFIjdRhW0YIpWpQUg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720786017913-fm1hdbuquj2sj2k0htavum5mtnk0lu33.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 package com.github.beetrox.packapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void floatingActionButtonPressed(View view) {
-        Log.d("FAB", "Pressed");
+
+        intent = new Intent(this, CreateNewPackingList.class);
+
+        startActivity(intent);
     }
 
     public void packingListPressed(View view) {
@@ -50,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
         packingLists.add(packingList1);
         packingLists.add(packingList2);
         packingLists.add(packingList3);
+
+        return packingLists;
+    }
+
+    public List<PackingList> createFaireBasePackingLists() {
+
+        List<PackingList> packingLists = new ArrayList<PackingList>();
+
+
 
         return packingLists;
     }
