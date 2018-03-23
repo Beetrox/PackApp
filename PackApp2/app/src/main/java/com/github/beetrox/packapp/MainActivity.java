@@ -8,12 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     Intent intent;
+    DatabaseReference itemRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
         PackingListRecyclerAdapter packingListRecyclerAdapter = new PackingListRecyclerAdapter(createFakePackingLists());
         packingListRecyclerView.setAdapter(packingListRecyclerAdapter);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        itemRef = database.getReference("packingLists");
 
 
         //ListItemRecyclerAdapter listItemRecyclerAdapter = new ListItemRecyclerAdapter(createFakeListItems());
@@ -60,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         return packingLists;
     }
 
-    public List<PackingList> createFaireBasePackingLists() {
+    public List<PackingList> createFireBasePackingLists() {
 
         List<PackingList> packingLists = new ArrayList<PackingList>();
 

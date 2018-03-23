@@ -1,21 +1,17 @@
 package com.github.beetrox.packapp;
 
-import android.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-/**
- * Created by Owner on 22/03/2018.
- */
+public class CreateNewListItem extends AppCompatActivity {
 
-public class CreateNewListItem extends Fragment {
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.create_new_list_item, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.create_new_list_item);
+    }
+
+    public void addListItemButtonPressed() {
+
     }
 }

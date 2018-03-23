@@ -1,21 +1,43 @@
 package com.github.beetrox.packapp;
 
-import android.app.Fragment;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.EditText;
 
-/**
- * Created by Owner on 22/03/2018.
- */
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class CreateNewPackingList extends Fragment {
+import java.util.ArrayList;
 
-    @Nullable
+public class CreateNewPackingList extends AppCompatActivity {
+
+    ArrayList<PackingList> packingLists;
+    EditText editPackingListName;
+    DatabaseReference itemRef;
+    Intent intent;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.create_new_packing_list, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.create_new_packing_list);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        editPackingListName = findViewById(R.id.editPackingListName);
+        itemRef = database.getReference("packingLists");
+
+
+    }
+
+    public void addPackingListButtonPressed(View view) {
+//        save to database then subscribe to that from main activity
+        PackingList packingList = new PackingList(editPackingListName.getText().toString());
+        itemRef.child(packingList.getName().toLowerCase()).setValue(packingList);
+
+        intent = new Intent(this, MainActivity.class);
+
+        startActivity(intent);
     }
 }
