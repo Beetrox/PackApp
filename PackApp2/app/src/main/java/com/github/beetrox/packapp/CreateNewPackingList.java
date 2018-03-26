@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class CreateNewPackingList extends AppCompatActivity {
 
-    ArrayList<PackingList> packingLists;
     EditText editPackingListName;
     DatabaseReference itemRef;
     Intent intent;

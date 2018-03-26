@@ -12,6 +12,10 @@ public class PackingList {
         this.name = name;
     }
 
+    public PackingList() {
+        this.name = "";
+    }
+
     public String getName() {
         return name;
     }
