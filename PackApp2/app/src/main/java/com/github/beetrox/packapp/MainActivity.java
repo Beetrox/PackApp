@@ -18,10 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = "Firebase";
 
     Intent intent;
     DatabaseReference itemRef;
     List<PackingList> packingLists;
+    PackingListRecyclerAdapter packingListRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,30 +36,36 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         packingListRecyclerView.setLayoutManager(linearLayoutManager);
 
-//        PackingListRecyclerAdapter packingListRecyclerAdapter = new PackingListRecyclerAdapter(createFakePackingLists());
-//        packingListRecyclerView.setAdapter(packingListRecyclerAdapter);
+        packingLists = createFakePackingLists();
+        packingListRecyclerAdapter = new PackingListRecyclerAdapter(packingLists);
+        packingListRecyclerView.setAdapter(packingListRecyclerAdapter);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        itemRef = database.getReference().child("packimgLists");
+        itemRef = database.getReference().child("packingLists");
         itemRef.keepSynced(true);
 
         itemRef.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                packingLists = new ArrayList<PackingList>();
+                Log.d("Main", "onDataChange: ");
+
+                //packingLists = new ArrayList<PackingList>();
                 for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()) {
 
                     PackingList value = dataSnapshot1.getValue(PackingList.class);
-                    PackingList packingList = new PackingList();
-                    String name1 = value.getName();
-                    packingList.setName(name1);
+                    //PackingList packingList = new PackingList();
+                    //String name1 = value.getName();
+                    //packingList.setName(name1);
+                    packingLists.add(value);
+                    packingListRecyclerAdapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.w(TAG, "Failed to read value.", databaseError.toException());
             }
         });
 
@@ -66,15 +74,15 @@ public class MainActivity extends AppCompatActivity {
         //packingListRecyclerView.setAdapter(listItemRecyclerAdapter);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        PackingListRecyclerAdapter<PackingList, PackingListRecyclerAdapter.PackingListViewHolder> packingListRecyclerAdapter = new packingListRecyclerAdapter<PackingList, PackingListRecyclerAdapter.PackingListViewHolder>();
-        @Override
-                protected void populateViewHolder(packingListRecyclerAdapter.PackingListViewHolder, PackingList model, int position) {
-
-        }
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        PackingListRecyclerAdapter<PackingList, PackingListRecyclerAdapter.PackingListViewHolder> packingListRecyclerAdapter = new packingListRecyclerAdapter<PackingList, PackingListRecyclerAdapter.PackingListViewHolder>();
+//        @Override
+//            protected void populateViewHolder(packingListRecyclerAdapter.PackingListViewHolder, PackingList model, int position) {
+//
+//        }
+//    }
 
     public void floatingActionButtonPressed(View view) {
 
