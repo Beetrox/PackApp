@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,12 +35,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RecyclerView packingListRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        registerForContextMenu(packingListRecyclerView);
         packingListRecyclerView.setHasFixedSize(true);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
         packingListRecyclerView.setLayoutManager(linearLayoutManager);
 
-        packingLists = createFakePackingLists();
+//        packingLists = createFakePackingLists();
         packingListRecyclerAdapter = new PackingListRecyclerAdapter(packingLists);
         packingListRecyclerView.setAdapter(packingListRecyclerAdapter);
 
@@ -54,11 +61,11 @@ public class MainActivity extends AppCompatActivity {
                 //packingLists = new ArrayList<PackingList>();
                 for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()) {
 
-                    PackingList value = dataSnapshot1.getValue(PackingList.class);
+                    PackingList packingList = dataSnapshot1.getValue(PackingList.class);
                     //PackingList packingList = new PackingList();
                     //String name1 = value.getName();
                     //packingList.setName(name1);
-                    packingLists.add(value);
+                    packingLists.add(packingList);
                     packingListRecyclerAdapter.notifyDataSetChanged();
                 }
             }
@@ -68,18 +75,24 @@ public class MainActivity extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", databaseError.toException());
             }
         });
+    }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
 
-        //ListItemRecyclerAdapter listItemRecyclerAdapter = new ListItemRecyclerAdapter(createFakeListItems());
-        //packingListRecyclerView.setAdapter(listItemRecyclerAdapter);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.packing_list_context_menu, menu);
     }
 
 //    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        PackingListRecyclerAdapter<PackingList, PackingListRecyclerAdapter.PackingListViewHolder> packingListRecyclerAdapter = new packingListRecyclerAdapter<PackingList, PackingListRecyclerAdapter.PackingListViewHolder>();
-//        @Override
-//            protected void populateViewHolder(packingListRecyclerAdapter.PackingListViewHolder, PackingList model, int position) {
+//    public boolean onContextItemSelected(MenuItem item) {
+//        return super.onContextItemSelected(item);
+//
+////        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+//
+//        switch (item.getItemId()) {
+//            case R.id.delete_packing_list:
 //
 //        }
 //    }
@@ -109,30 +122,4 @@ public class MainActivity extends AppCompatActivity {
 
         return packingLists;
     }
-
-    public List<PackingList> createFireBasePackingLists() {
-
-        List<PackingList> packingLists = new ArrayList<PackingList>();
-
-
-
-        return packingLists;
-    }
-
-    /*
-    public List<ListItem> createFakeListItems() {
-
-        List<ListItem> listItems = new ArrayList<ListItem>();
-
-        ListItem listItem1 = new ListItem("list item 1", 1);
-        ListItem listItem2 = new ListItem("list item 2", 3);
-        ListItem listItem3 = new ListItem("list item 3", 7);
-
-        listItems.add(listItem1);
-        listItems.add(listItem2);
-        listItems.add(listItem3);
-
-        return listItems;
-    }
-    */
 }
