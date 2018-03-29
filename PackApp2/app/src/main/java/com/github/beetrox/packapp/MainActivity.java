@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference itemRef;
     List<PackingList> packingLists;
     PackingListRecyclerAdapter packingListRecyclerAdapter;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
         packingListRecyclerView.setLayoutManager(linearLayoutManager);
 
-//        packingLists = createFakePackingLists();
+        packingLists = createFakePackingLists();
         packingListRecyclerAdapter = new PackingListRecyclerAdapter(packingLists);
         packingListRecyclerView.setAdapter(packingListRecyclerAdapter);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         itemRef = database.getReference().child("packingLists");
         itemRef.keepSynced(true);
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("Main", "onDataChange: ");
+
+                packingLists.clear();
 
                 //packingLists = new ArrayList<PackingList>();
                 for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()) {
@@ -85,17 +88,39 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.packing_list_context_menu, menu);
     }
 
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//        return super.onContextItemSelected(item);
-//
-////        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        switch (item.getItemId()) {
+            case R.id.delete_packing_list:
+                Log.d(TAG, item.toString());
+//                int position = info.position;
+//                PackingList packingList = packingLists.get(position);
+//                String packingListName = packingList.getName();
+//                String itemName = item.toString();
+//                itemRef.child(packingListName.toLowerCase()).removeValue();
+                packingListRecyclerAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+//        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 //
 //        switch (item.getItemId()) {
 //            case R.id.delete_packing_list:
-//
+//                Log.d(TAG, item.toString());
+////                itemRef.child(info).removeValue();
+//                packingListRecyclerAdapter.notifyDataSetChanged();
+//                return true;
+//            default:
+//                return super.onContextItemSelected(item);
 //        }
-//    }
+
+//        return super.onContextItemSelected(item);
+    }
 
     public void floatingActionButtonPressed(View view) {
 
@@ -111,14 +136,6 @@ public class MainActivity extends AppCompatActivity {
     public List<PackingList> createFakePackingLists() {
 
         List<PackingList> packingLists = new ArrayList<PackingList>();
-
-        PackingList packingList1 = new PackingList("packing list 1");
-        PackingList packingList2 = new PackingList("packing list 2");
-        PackingList packingList3 = new PackingList("packing list 3");
-
-        packingLists.add(packingList1);
-        packingLists.add(packingList2);
-        packingLists.add(packingList3);
 
         return packingLists;
     }
