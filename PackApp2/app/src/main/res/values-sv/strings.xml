@@ -16,6 +16,10 @@
     <string name="listName">Listans namn</string>
     <string name="editReminder">Ändra påminnelse</string>
     <string name="amount">Antal</string>
+    <string name="namePackingList">Namnge din packlista</string>
+    <string name="addAllItems">Lägg till alla föremål från baslistan</string>
+    <string name="nameListItem">Namnge ditt föremål</string>
+    <string name="addToCategory">Lägg till i kategori</string>
 
     <string-array name="categoriesArray">
         <item>Övrigt</item>

@@ -1,6 +1,7 @@
 package com.github.beetrox.packapp;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class PackingListRecyclerAdapter extends RecyclerView.Adapter<PackingList
         return new PackingListViewHolder(itemView);
     }
 
-    class PackingListViewHolder extends RecyclerView.ViewHolder {
+    class PackingListViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         protected TextView vName;
 
@@ -49,7 +50,12 @@ public class PackingListRecyclerAdapter extends RecyclerView.Adapter<PackingList
             //make constructor
             super(v);
             vName = (TextView) v.findViewById(R.id.listItemName);
+            v.setOnCreateContextMenuListener(this);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+
         }
     }
-
 }

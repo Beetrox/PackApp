@@ -15,6 +15,10 @@
     <string name="listName">List name</string>
     <string name="editReminder">Edit reminder</string>
     <string name="amount">Amount</string>
+    <string name="namePackingList">Name your packing list</string>
+    <string name="addAllItems">Add all items from base list</string>
+    <string name="nameListItem">Name your item</string>
+    <string name="addToCategory">Add to category</string>
 
     <string-array name="categoriesArray">
         <item>Miscellaneous</item>
