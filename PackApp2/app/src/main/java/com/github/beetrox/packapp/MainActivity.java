@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
@@ -119,12 +119,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-//        int index = info.position;
-//        View view = info.targetView;
 
         switch (item.getItemId()) {
             case R.id.delete_packing_list:
-                Log.d(TAG, item.toString());
                 int position = info.position;
                 PackingList packingList = packingLists.get(position);
                 String packingListName = packingList.getName();
@@ -141,7 +138,11 @@ public class MainActivity extends AppCompatActivity {
 //        switch (item.getItemId()) {
 //            case R.id.delete_packing_list:
 //                Log.d(TAG, item.toString());
-////                itemRef.child(info).removeValue();
+//                int position = info.position;
+//                PackingList packingList = packingLists.get(position);
+//                String packingListName = packingList.getName();
+////                String itemName = item.toString();
+//                itemRef.child(packingListName.toLowerCase()).removeValue();
 //                packingListRecyclerAdapter.notifyDataSetChanged();
 //                return true;
 //            default:
