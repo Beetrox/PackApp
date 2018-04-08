@@ -33,11 +33,25 @@ public class ShowListItems extends FragmentActivity {
         };
 
         // Add 3 tabs, specifying the tab's text and TabListener
-        for (int i = 0; i < 5; i++) {
+        String[] categories = getCategories();
+
+        for (int i = 0; i < categories.length; i++) {
             actionBar.addTab(
                     actionBar.newTab()
-                            .setText(R.string.categoryAll)
+                            .setText(categories[i])
                             .setTabListener(tabListener));
         }
+    }
+
+    private String[] getCategories() {
+        String[] categories;
+        categories = new String[] {
+                getText(R.string.categoryAll).toString(),
+                getText(R.string.categoryClothes).toString(),
+                getText(R.string.categoryToiletries).toString(),
+                getText(R.string.categoryElectronics).toString(),
+                getText(R.string.categoryMiscellaneous).toString()};
+
+        return categories;
     }
 }
