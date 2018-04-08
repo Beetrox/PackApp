@@ -21,6 +21,12 @@
     <string name="nameListItem">Namnge ditt föremål</string>
     <string name="addToCategory">Lägg till i kategori</string>
 
+    <string name="categoryAll">Alla</string>
+    <string name="categoryMiscellaneous">Övrigt</string>
+    <string name="categoryClothes">Kläder</string>
+    <string name="categoryToiletries">Toalettartiklar</string>
+    <string name="categoryElectronics">Elektronik</string>
+
     <string-array name="categoriesArray">
         <item>Övrigt</item>
         <item>Kläder</item>

@@ -161,6 +161,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void packingListPressed(View view) {
         Log.d("Packing List", "Pressed");
+
+        intent = new Intent(this, ShowListItems.class);
+
+        startActivity(intent);
     }
 
     public List<PackingList> createFakePackingLists() {

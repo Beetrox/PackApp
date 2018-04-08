@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateNewPackingList" />
-        <activity android:name=".CreateNewListItem"></activity>
+        <activity android:name=".CreateNewListItem"/>
+        <activity android:name=".ShowListItems" />
     </application>
 
 </manifest>

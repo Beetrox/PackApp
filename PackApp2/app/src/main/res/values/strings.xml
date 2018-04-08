@@ -20,6 +20,12 @@
     <string name="nameListItem">Name your item</string>
     <string name="addToCategory">Add to category</string>
 
+    <string name="categoryAll">All</string>
+    <string name="categoryMiscellaneous">Misc</string>
+    <string name="categoryClothes">Clothes</string>
+    <string name="categoryToiletries">Toiletries</string>
+    <string name="categoryElectronics">Electronics</string>
+
     <string-array name="categoriesArray">
         <item>Miscellaneous</item>
         <item>Clothes</item>
