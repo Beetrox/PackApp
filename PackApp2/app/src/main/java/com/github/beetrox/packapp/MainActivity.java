@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 //        return super.onContextItemSelected(item);
     }
 
-    public void floatingActionButtonPressed(View view) {
+    public void floatingActionButtonAddPackingList(View view) {
 
         intent = new Intent(this, CreateNewPackingList.class);
 

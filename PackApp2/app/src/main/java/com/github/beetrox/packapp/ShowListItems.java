@@ -2,8 +2,14 @@ package com.github.beetrox.packapp;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.EditText;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ShowListItems extends FragmentActivity {
 
@@ -11,6 +17,9 @@ public class ShowListItems extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_list_items);
+
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         final ActionBar actionBar = getActionBar();
 
@@ -41,6 +50,8 @@ public class ShowListItems extends FragmentActivity {
                             .setText(categories[i])
                             .setTabListener(tabListener));
         }
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
     }
 
     private String[] getCategories() {
@@ -53,5 +64,14 @@ public class ShowListItems extends FragmentActivity {
                 getText(R.string.categoryMiscellaneous).toString()};
 
         return categories;
+    }
+
+    public void floatingActionButtonAddListItem(View view) {
+
+        Intent intent;
+
+        intent = new Intent(this, CreateNewListItem.class);
+
+        startActivity(intent);
     }
 }

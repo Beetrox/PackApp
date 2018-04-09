@@ -22,6 +22,9 @@ public class CreateNewPackingList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_packing_list);
 
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         editPackingListName = findViewById(R.id.editPackingListName);
