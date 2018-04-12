@@ -5,8 +5,10 @@
     <string name="delete">Delete</string>
     <string name="share">Share</string>
     <string name="edit">Edit</string>
+    <string name="reset_status">Reset status</string>
     <string name="ok">OK</string>
     <string name="name">Name</string>
+    <string name="log_out">Log out</string>
 
     <string name="myPackingLists">My packing lists</string>
     <string name="myBaseLists">My base lists</string>

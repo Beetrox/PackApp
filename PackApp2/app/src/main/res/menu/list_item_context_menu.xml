@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/reset_status_list_item"
+        android:title="@string/reset_status"
+        />
+
+    <item
+        android:id="@+id/edit_list_item"
+        android:title="@string/edit"
+        />
+
+    <item
+        android:id="@+id/delete_list_item"
+        android:title="@string/delete"
+        />
+
+</menu>

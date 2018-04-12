@@ -1,5 +1,7 @@
 package com.github.beetrox.packapp;
 
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,30 +30,47 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
 
     @Override
     public void onBindViewHolder(ListItemViewHolder listItemViewHolder, int i) {
-        ListItem li = listItems.get(i);
-        listItemViewHolder.vName.setText(li.getName());
-        //listItemViewHolder.vAmount.setText(li.getAmount());
+        ListItem listItem = listItems.get(i);
+        listItemViewHolder.viewName.setText(listItem.getName());
+//        listItemViewHolder.vAmount.setText(li.getAmount());
+//        listItemViewHolder.viewBackground;
+
+        Resources resources = listItemViewHolder.itemView.getResources();
+        String status = listItem.getStatus();
+
+        if (status == "red") {
+            listItemViewHolder.itemView.setBackgroundColor(resources.getColor(R.color.redStatus));
+        } else if (status == "yellow") {
+            listItemViewHolder.itemView.setBackgroundColor(resources.getColor(R.color.yellowStatus));
+        } else if (status == "green") {
+            listItemViewHolder.itemView.setBackgroundColor(resources.getColor(R.color.greenStatus));
+        }
     }
 
     @Override
     public ListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.item_card, parent, false);
+                inflate(R.layout.list_item_card, parent, false);
+
+//        Resources resources = itemView.getResources();
+//        itemView.setBackgroundColor(resources.getColor(R.color.redStatus));
 
         return new ListItemViewHolder(itemView);
     }
 
     class ListItemViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView vName;
-        protected TextView vAmount;
+        protected TextView viewName;
+        protected TextView viewAmount;
+        protected Drawable viewBackground;
 
-        public ListItemViewHolder(View v) {
+        public ListItemViewHolder(View view) {
             //make constructor
-            super(v);
-            vName = (TextView) v.findViewById(R.id.listItemName);
-            vAmount = (TextView) v.findViewById(R.id.listItemAmount);
+            super(view);
+            viewName = (TextView) view.findViewById(R.id.listItemName);
+            viewAmount = (TextView) view.findViewById(R.id.listItemAmount);
+            viewBackground = view.getBackground();
         }
     }
 

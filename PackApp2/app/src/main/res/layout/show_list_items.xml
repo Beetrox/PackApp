@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/showListItemsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,11 +15,11 @@
         android:layout_height="wrap_content"
         app:tabMode="fixed" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/app_background" />
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/viewpager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@drawable/app_background" />-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -32,10 +33,19 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        app:layout_anchor="@+id/viewpager"
+        app:layout_anchor="@+id/recyclerViewShowListItems"
         app:layout_anchorGravity="right|bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewShowListItems"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:scrollbars="vertical">
+
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

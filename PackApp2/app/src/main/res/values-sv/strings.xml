@@ -6,8 +6,10 @@
     <string name="delete">Ta bort</string>
     <string name="share">Dela</string>
     <string name="edit">Ändra</string>
+    <string name="reset_status">Återställ status</string>
     <string name="ok">OK</string>
     <string name="name">Namn</string>
+    <string name="log_out">Logga ut</string>
 
     <string name="myPackingLists">Mina packlistor</string>
     <string name="myBaseLists">Mina baslistor</string>

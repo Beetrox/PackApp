@@ -7,23 +7,19 @@ package com.github.beetrox.packapp;
 public class ListItem {
 
     private String name;
-    private String category;
     private String status;
     private int amount;
 
-    public ListItem(String name, String category) {
+    public ListItem(String name) {
         this.name = name;
-        this.category = category;
         this.status = "red";
         this.amount = 0;
     }
 
+    public ListItem(){}
+
     public String getName() {
         return name;
-    }
-
-    public String getCategory() {
-        return category;
     }
 
     public String getStatus() {

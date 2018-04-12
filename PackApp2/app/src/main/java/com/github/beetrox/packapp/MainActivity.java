@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        // Log in
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
             // already signed in
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(builder.build(), RC_SIGN_IN);
         }
 
+        // Show firebase packing lists
         RecyclerView packingListRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         CardView packingListCardView = findViewById(R.id.packingListCard);
         registerForContextMenu(packingListRecyclerView);
@@ -167,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public List<PackingList> createFakePackingLists() {
+    public static List<PackingList> createFakePackingLists() {
 
         List<PackingList> packingLists = new ArrayList<PackingList>();
 
