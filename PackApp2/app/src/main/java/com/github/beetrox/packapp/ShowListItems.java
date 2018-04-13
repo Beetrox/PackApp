@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -142,7 +144,7 @@ public class ShowListItems extends FragmentActivity {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                int noll = 0;
+
                 listItems.clear();
 
                 if (category.equals("all")) {
@@ -151,11 +153,11 @@ public class ShowListItems extends FragmentActivity {
 
                         for (DataSnapshot dataSnapshot1 : category.getChildren()) {
 
-                            ListItem listItem = dataSnapshot1.getValue(ListItem.class);
+//                            ListItem listItem = dataSnapshot1.getValue(ListItem.class);
                             //PackingList packingList = new PackingList();
                             //String name1 = value.getName();
                             //packingList.setName(name1);
-                            listItems.add(listItem);
+//                            listItems.add(listItem);
                             listItemRecyclerAdapter.notifyDataSetChanged();
 
                         }
@@ -187,12 +189,25 @@ public class ShowListItems extends FragmentActivity {
     public void listItemPressed(View view) {
         Log.d(TAG, "Pressed");
 
-        TextView textView = (TextView) view.findViewById(R.id.listItemName);
-        String name = textView.getText().toString().toLowerCase();
+        TextView textViewName = (TextView) view.findViewById(R.id.listItemName);
+        TextView textViewCategory = view.findViewById(R.id.listItemCategory);
+        String name = textViewName.getText().toString().toLowerCase();
+        String category = textViewCategory.getText().toString().toLowerCase();
+        itemRef = database.getReference().child("packingLists").child("göteborg").child("categories").child(category);
+        String status = itemRef.child(name).child("status").toString();
+//        String status = itemRef.child("göteborg").child(category).child(name).child("status").toString();
+//        Resources resources = view.getResources();
+        Log.d(TAG, status);
 
-        itemRef.child(name).child("status").setValue("yellow");
+        // if all
+//        itemRef.getParent().child(category).child("status").setValue("yellow");
 
-
+        //if in category
+        if (status.equals("red")) {
+            itemRef.child(name).child("status").setValue("yellow");
+        } else if (status.equals("yellow")) {
+            itemRef.child(name).child("status").setValue("green");
+        }
 
 //        int newColor;
 //        int oldColor = Color.TRANSPARENT;

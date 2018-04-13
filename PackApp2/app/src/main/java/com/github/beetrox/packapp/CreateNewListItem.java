@@ -17,7 +17,7 @@ public class CreateNewListItem extends AppCompatActivity {
 
 
     EditText editListItemName;
-    Spinner spinner;
+    Spinner editListItemCategory;
     DatabaseReference itemRef;
     Intent intent;
 
@@ -33,21 +33,22 @@ public class CreateNewListItem extends AppCompatActivity {
 
 
         editListItemName = findViewById(R.id.editListItemName);
+        editListItemCategory = findViewById(R.id.categorySpinner);
         itemRef = database.getReference("packingLists").child("göteborg").child("categories");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, getCategories());
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner = (Spinner) findViewById(R.id.categorySpinner);
-        spinner.setAdapter(adapter);
+        editListItemCategory = (Spinner) findViewById(R.id.categorySpinner);
+        editListItemCategory.setAdapter(adapter);
     }
 
     public void addListItemButtonPressed(View view) {
 
-        String selected = spinner.getSelectedItem().toString();
+        String selected = editListItemCategory.getSelectedItem().toString();
 
-        ListItem listItem = new ListItem(editListItemName.getText().toString());
+        ListItem listItem = new ListItem(editListItemName.getText().toString(), selected.toLowerCase());
         itemRef.child(selected.toLowerCase()).child(listItem.getName().toLowerCase()).setValue(listItem);
 
         intent = new Intent(this, ShowListItems.class);

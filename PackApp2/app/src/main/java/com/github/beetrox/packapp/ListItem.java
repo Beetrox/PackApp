@@ -8,11 +8,13 @@ public class ListItem {
 
     private String name;
     private String status;
+    private String category;
     private int amount;
 
-    public ListItem(String name) {
+    public ListItem(String name, String category) {
         this.name = name;
         this.status = "red";
+        this.category = category;
         this.amount = 0;
     }
 
@@ -24,6 +26,10 @@ public class ListItem {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public void setStatus(String status) {

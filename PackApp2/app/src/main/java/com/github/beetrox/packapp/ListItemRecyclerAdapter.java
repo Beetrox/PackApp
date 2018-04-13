@@ -32,17 +32,19 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
     public void onBindViewHolder(ListItemViewHolder listItemViewHolder, int i) {
         ListItem listItem = listItems.get(i);
         listItemViewHolder.viewName.setText(listItem.getName());
+//        listItemViewHolder.viewCategory.setText(listItem.getCategory);
 //        listItemViewHolder.vAmount.setText(li.getAmount());
 //        listItemViewHolder.viewBackground;
 
         Resources resources = listItemViewHolder.itemView.getResources();
         String status = listItem.getStatus();
+        String category = listItem.getCategory();
 
-        if (status == "red") {
+        if (status.equals("red")) {
             listItemViewHolder.itemView.setBackgroundColor(resources.getColor(R.color.redStatus));
-        } else if (status == "yellow") {
+        } else if (status.equals("yellow")) {
             listItemViewHolder.itemView.setBackgroundColor(resources.getColor(R.color.yellowStatus));
-        } else if (status == "green") {
+        } else if (status.equals("green")) {
             listItemViewHolder.itemView.setBackgroundColor(resources.getColor(R.color.greenStatus));
         }
     }
@@ -63,6 +65,7 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
 
         protected TextView viewName;
         protected TextView viewAmount;
+        protected TextView viewCategory;
         protected Drawable viewBackground;
 
         public ListItemViewHolder(View view) {
@@ -70,6 +73,7 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
             super(view);
             viewName = (TextView) view.findViewById(R.id.listItemName);
             viewAmount = (TextView) view.findViewById(R.id.listItemAmount);
+            viewCategory = view.findViewById(R.id.listItemCategory);
             viewBackground = view.getBackground();
         }
     }
