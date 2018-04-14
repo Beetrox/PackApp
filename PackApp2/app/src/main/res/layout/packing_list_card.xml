@@ -12,6 +12,7 @@
     android:elevation="5dp"
     android:longClickable="true"
     android:clickable="true"
+    android:focusable="true"
     android:onClick="packingListPressed"
     card_view:cardCornerRadius="5dp">
     

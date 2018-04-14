@@ -32,7 +32,7 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
     public void onBindViewHolder(ListItemViewHolder listItemViewHolder, int i) {
         ListItem listItem = listItems.get(i);
         listItemViewHolder.viewName.setText(listItem.getName());
-//        listItemViewHolder.viewCategory.setText(listItem.getCategory);
+        listItemViewHolder.viewCategory.setText(listItem.getCategory());
 //        listItemViewHolder.vAmount.setText(li.getAmount());
 //        listItemViewHolder.viewBackground;
 
@@ -71,8 +71,8 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
         public ListItemViewHolder(View view) {
             //make constructor
             super(view);
-            viewName = (TextView) view.findViewById(R.id.listItemName);
-            viewAmount = (TextView) view.findViewById(R.id.listItemAmount);
+            viewName = view.findViewById(R.id.listItemName);
+            viewAmount = view.findViewById(R.id.listItemAmount);
             viewCategory = view.findViewById(R.id.listItemCategory);
             viewBackground = view.getBackground();
         }
