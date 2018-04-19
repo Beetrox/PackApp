@@ -13,7 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Show firebase packing lists
-        RecyclerView packingListRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        CardView packingListCardView = findViewById(R.id.packingListCard);
+        RecyclerView packingListRecyclerView = (RecyclerView) findViewById(R.id.packingListRecyclerView);
+        CardView packingListCardView = findViewById(R.id.listItemCardView);
         registerForContextMenu(packingListRecyclerView);
         packingListRecyclerView.setHasFixedSize(true);
 
@@ -121,7 +121,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 
+
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        View v = null;
+        if (info != null)
+            v = info.targetView;
+        else
+            Log.d("David", "onContextItemSelected: info null");
+
+       // TextView t = v.findViewById(R.id.listItemName);
+        if (v != null)
+            Log.d("David", "onContextItemSelected: " + v.getId() );
+        else
+            Log.d("David", "onContextItemSelected: null");
+
+
+
 
         switch (item.getItemId()) {
             case R.id.delete_packing_list:
@@ -165,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
     public void packingListPressed(View view) {
         Log.d("Packing List", "Pressed");
 
+        Log.d("David", "pressed: " + view.getId() );
         intent = new Intent(this, ShowListItems.class);
 
         startActivity(intent);

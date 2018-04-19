@@ -33,6 +33,7 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
         ListItem listItem = listItems.get(i);
         listItemViewHolder.viewName.setText(listItem.getName());
         listItemViewHolder.viewCategory.setText(listItem.getCategory());
+        listItemViewHolder.viewStatus.setText(listItem.getStatus());
 //        listItemViewHolder.vAmount.setText(li.getAmount());
 //        listItemViewHolder.viewBackground;
 
@@ -66,6 +67,7 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
         protected TextView viewName;
         protected TextView viewAmount;
         protected TextView viewCategory;
+        protected TextView viewStatus;
         protected Drawable viewBackground;
 
         public ListItemViewHolder(View view) {
@@ -74,6 +76,7 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
             viewName = view.findViewById(R.id.listItemName);
             viewAmount = view.findViewById(R.id.listItemAmount);
             viewCategory = view.findViewById(R.id.listItemCategory);
+            viewStatus = view.findViewById(R.id.listItemStatus);
             viewBackground = view.getBackground();
         }
     }

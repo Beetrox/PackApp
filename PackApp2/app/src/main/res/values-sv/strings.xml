@@ -9,6 +9,7 @@
     <string name="reset_status">Återställ status</string>
     <string name="ok">OK</string>
     <string name="name">Namn</string>
+    <string name="list_item_name_hint">Namnge ditt föremål</string>
     <string name="log_out">Logga ut</string>
 
     <string name="myPackingLists">Mina packlistor</string>

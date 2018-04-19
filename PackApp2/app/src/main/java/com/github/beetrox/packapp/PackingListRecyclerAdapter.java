@@ -49,7 +49,7 @@ public class PackingListRecyclerAdapter extends RecyclerView.Adapter<PackingList
         public PackingListViewHolder(View v) {
             //make constructor
             super(v);
-            vName = (TextView) v.findViewById(R.id.listItemName);
+            vName = (TextView) v.findViewById(R.id.packingListName);
             v.setOnCreateContextMenuListener(this);
         }
 

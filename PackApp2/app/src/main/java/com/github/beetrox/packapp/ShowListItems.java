@@ -3,14 +3,8 @@ package com.github.beetrox.packapp;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -27,8 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +31,10 @@ public class ShowListItems extends FragmentActivity {
     List<ListItem> listItems;
     ListItemRecyclerAdapter listItemRecyclerAdapter;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+//    CardView listItemCardView = findViewById(R.id.listItemCardView);
+//    RecyclerView listItemRecyclerView = (RecyclerView) findViewById(R.id.listItemRecyclerView);
+//    registerForContextMenu(listItemRecyclerView);
+//    listItemRecyclerView.setHasFixedSize(true);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +49,13 @@ public class ShowListItems extends FragmentActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        RecyclerView packingListRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewShowListItems);
+        RecyclerView listItemRecyclerView = (RecyclerView) findViewById(R.id.listItemRecyclerView);
 
-        packingListRecyclerView.setLayoutManager(linearLayoutManager);
+        listItemRecyclerView.setLayoutManager(linearLayoutManager);
 
         listItems = new ArrayList<ListItem>();
         listItemRecyclerAdapter = new ListItemRecyclerAdapter(listItems);
-        packingListRecyclerView.setAdapter(listItemRecyclerAdapter);
+        listItemRecyclerView.setAdapter(listItemRecyclerAdapter);
 //        ViewPager myViewPager = findViewById(R.id.viewpager);
 
         setUpDatabase("electronics");
@@ -148,23 +143,20 @@ public class ShowListItems extends FragmentActivity {
                 listItems.clear();
 
                 if (category.equals("all")) {
-
                     for (DataSnapshot category : dataSnapshot.getChildren()) {
-
                         for (DataSnapshot dataSnapshot1 : category.getChildren()) {
 
-//                            ListItem listItem = dataSnapshot1.getValue(ListItem.class);
+                            ListItem listItem = dataSnapshot1.getValue(ListItem.class);
                             //PackingList packingList = new PackingList();
                             //String name1 = value.getName();
                             //packingList.setName(name1);
-//                            listItems.add(listItem);
+                            listItems.add(listItem);
                             listItemRecyclerAdapter.notifyDataSetChanged();
 
                         }
                     }
 
                 } else {
-
                     //packingLists = new ArrayList<PackingList>();
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
@@ -191,22 +183,30 @@ public class ShowListItems extends FragmentActivity {
 
         TextView textViewName = (TextView) view.findViewById(R.id.listItemName);
         TextView textViewCategory = view.findViewById(R.id.listItemCategory);
+        TextView textViewStatus = view.findViewById(R.id.listItemStatus);
         String name = textViewName.getText().toString().toLowerCase();
+        //find listItem category and status from listItems to use later
         String category = textViewCategory.getText().toString().toLowerCase();
+        String status = textViewStatus.getText().toString().toLowerCase();
         itemRef = database.getReference().child("packingLists").child("göteborg").child("categories").child(category);
-        String status = itemRef.child(name).child("status").toString();
 //        String status = itemRef.child("göteborg").child(category).child(name).child("status").toString();
 //        Resources resources = view.getResources();
         Log.d(TAG, status);
 
-        // if all
-//        itemRef.getParent().child(category).child("status").setValue("yellow");
-
-        //if in category
-        if (status.equals("red")) {
-            itemRef.child(name).child("status").setValue("yellow");
-        } else if (status.equals("yellow")) {
-            itemRef.child(name).child("status").setValue("green");
+        if (category.equals("clothes") || category.equals("toiletries") || category.equals("electronics") || category.equals("misc")) {
+            //if in category
+            if (status.equals("red")) {
+                itemRef.child(name).child("status").setValue("yellow");
+            } else if (status.equals("yellow")) {
+                itemRef.child(name).child("status").setValue("green");
+            }
+        } else {
+            //if all
+            if (status.equals("red")) {
+                itemRef.getParent().child(category).child(name).child("status").setValue("yellow");
+            } else if (status.equals("yellow")) {
+                itemRef.getParent().child(category).child(name).child("status").setValue("green");
+            }
         }
 
 //        int newColor;

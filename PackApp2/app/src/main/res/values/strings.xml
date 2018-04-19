@@ -9,6 +9,7 @@
     <string name="ok">OK</string>
     <string name="name">Name</string>
     <string name="log_out">Log out</string>
+    <string name="list_item_name_hint">Name your item</string>
 
     <string name="myPackingLists">My packing lists</string>
     <string name="myBaseLists">My base lists</string>
