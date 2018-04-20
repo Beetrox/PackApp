@@ -31,6 +31,7 @@ public class ShowListItems extends FragmentActivity {
     List<ListItem> listItems;
     ListItemRecyclerAdapter listItemRecyclerAdapter;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+    String currentPackingListName;
 //    CardView listItemCardView = findViewById(R.id.listItemCardView);
 //    RecyclerView listItemRecyclerView = (RecyclerView) findViewById(R.id.listItemRecyclerView);
 //    registerForContextMenu(listItemRecyclerView);
@@ -58,7 +59,14 @@ public class ShowListItems extends FragmentActivity {
         listItemRecyclerView.setAdapter(listItemRecyclerAdapter);
 //        ViewPager myViewPager = findViewById(R.id.viewpager);
 
-        setUpDatabase("electronics");
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            //get the value based on the key
+            currentPackingListName = extras.getString("packingListName");
+//            Log.d(TAG, value);
+        }
+
+//        setUpDatabase("electronics");
 
         final ActionBar actionBar = getActionBar();
 
@@ -71,7 +79,7 @@ public class ShowListItems extends FragmentActivity {
                 // show the given tab
                 String currentCategory = tab.getText().toString().toLowerCase();
 
-                setUpDatabase(currentCategory);
+                setUpDatabase(currentCategory, currentPackingListName);
             }
 
             public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -122,15 +130,17 @@ public class ShowListItems extends FragmentActivity {
 
         intent = new Intent(this, CreateNewListItem.class);
 
+        intent.putExtra("packingListName", currentPackingListName);
+
         startActivity(intent);
     }
 
-    private void setUpDatabase(final String category) {
+    private void setUpDatabase(final String category, String packingListName) {
 
         if (category.equals("all")) {
-            itemRef = database.getReference().child("packingLists").child("göteborg").child("categories");
+            itemRef = database.getReference().child("packingLists").child(packingListName).child("categories");
         } else {
-            itemRef = database.getReference().child("packingLists").child("göteborg").child("categories").child(category);
+            itemRef = database.getReference().child("packingLists").child(packingListName).child("categories").child(category);
         }
 
         itemRef.keepSynced(true);
@@ -188,7 +198,7 @@ public class ShowListItems extends FragmentActivity {
         //find listItem category and status from listItems to use later
         String category = textViewCategory.getText().toString().toLowerCase();
         String status = textViewStatus.getText().toString().toLowerCase();
-        itemRef = database.getReference().child("packingLists").child("göteborg").child("categories").child(category);
+        itemRef = database.getReference().child("packingLists").child(currentPackingListName).child("categories").child(category);
 //        String status = itemRef.child("göteborg").child(category).child(name).child("status").toString();
 //        Resources resources = view.getResources();
         Log.d(TAG, status);
@@ -251,5 +261,11 @@ public class ShowListItems extends FragmentActivity {
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onNavigateUp(){
+        finish();
+        return true;
     }
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -20,6 +21,7 @@ public class CreateNewListItem extends AppCompatActivity {
     Spinner editListItemCategory;
     DatabaseReference itemRef;
     Intent intent;
+    String currentPackingListName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +34,16 @@ public class CreateNewListItem extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            //get the value based on the key
+            currentPackingListName = extras.getString("packingListName");
+//            Log.d(TAG, value);
+        }
+
         editListItemName = findViewById(R.id.editListItemName);
         editListItemCategory = findViewById(R.id.categorySpinner);
-        itemRef = database.getReference("packingLists").child("göteborg").child("categories");
+        itemRef = database.getReference("packingLists").child(currentPackingListName).child("categories");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, getCategories());
@@ -53,6 +62,8 @@ public class CreateNewListItem extends AppCompatActivity {
 
         intent = new Intent(this, ShowListItems.class);
 
+        intent.putExtra("packingListName", currentPackingListName);
+
         startActivity(intent);
     }
 
@@ -65,5 +76,11 @@ public class CreateNewListItem extends AppCompatActivity {
                 getText(R.string.categoryElectronics).toString()};
 
         return categories;
+    }
+
+    @Override
+    public boolean onNavigateUp(){
+        finish();
+        return true;
     }
 }

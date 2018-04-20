@@ -180,8 +180,11 @@ public class MainActivity extends AppCompatActivity {
     public void packingListPressed(View view) {
         Log.d("Packing List", "Pressed");
 
-        Log.d("David", "pressed: " + view.getId() );
         intent = new Intent(this, ShowListItems.class);
+
+        TextView textViewName = (TextView) view.findViewById(R.id.packingListName);
+        String packingListName = textViewName.getText().toString().toLowerCase();
+        intent.putExtra("packingListName", packingListName);
 
         startActivity(intent);
     }
@@ -221,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void startMainActivity() {
+    public void startMainActivity() {
 
         Intent intent;
 

@@ -42,4 +42,10 @@ public class CreateNewPackingList extends AppCompatActivity {
 
         startActivity(intent);
     }
+
+    @Override
+    public boolean onNavigateUp(){
+        finish();
+        return true;
+    }
 }
