@@ -3,8 +3,11 @@ package com.github.beetrox.packapp;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.List;
@@ -16,10 +19,12 @@ import java.util.List;
 public class PackingListRecyclerAdapter extends RecyclerView.Adapter<PackingListRecyclerAdapter.PackingListViewHolder> {
 
     private List<PackingList> packingLists;
+    private MainActivity mainActivity;
 
 
-    public PackingListRecyclerAdapter(List<PackingList> packingLists) {
+    public PackingListRecyclerAdapter(List<PackingList> packingLists, MainActivity mainActivity) {
         this.packingLists = packingLists;
+        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -28,9 +33,38 @@ public class PackingListRecyclerAdapter extends RecyclerView.Adapter<PackingList
     }
 
     @Override
-    public void onBindViewHolder(PackingListViewHolder packingListViewHolder, int i) {
-        PackingList pl = packingLists.get(i);
-        packingListViewHolder.vName.setText(pl.getName());
+    public void onBindViewHolder(final PackingListViewHolder packingListViewHolder, int i) {
+        final PackingList pl = packingLists.get(i);
+        packingListViewHolder.viewName.setText(pl.getName());
+
+        packingListViewHolder.viewMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //creating a popup menu
+                PopupMenu popup = new PopupMenu(mainActivity, packingListViewHolder.viewMenu);
+                //inflating menu from xml resource
+                popup.inflate(R.menu.packing_list_popup_menu);
+                //adding click listener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.menuPackingListEdit:
+                                //handle menu1 click
+                                mainActivity.editPackingList(pl.getName().toLowerCase(), "New name");
+                                break;
+                            case R.id.menuPackingListDelete:
+                                //handle menu2 click
+                                mainActivity.deletePackingList(pl.getName().toLowerCase());
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                //displaying the popup
+                popup.show();
+            }
+        });
     }
 
     @Override
@@ -44,13 +78,15 @@ public class PackingListRecyclerAdapter extends RecyclerView.Adapter<PackingList
 
     class PackingListViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
-        protected TextView vName;
+        protected TextView viewName;
+        protected ImageButton viewMenu;
 
-        public PackingListViewHolder(View v) {
+        public PackingListViewHolder(View view) {
             //make constructor
-            super(v);
-            vName = (TextView) v.findViewById(R.id.packingListName);
-            v.setOnCreateContextMenuListener(this);
+            super(view);
+            viewName = (TextView) view.findViewById(R.id.packingListName);
+            viewMenu = view.findViewById(R.id.packingListMenu);
+//            v.setOnCreateContextMenuListener(this);
         }
 
         @Override

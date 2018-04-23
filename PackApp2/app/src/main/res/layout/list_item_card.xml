@@ -57,7 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="32dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
@@ -66,6 +66,18 @@
             android:textColor="@android:color/black"
             android:textAppearance="?android:textAppearanceLarge"
             android:layout_gravity="center_vertical"/>
+
+        <ImageButton
+            android:id="@+id/listItemMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:onClick="listItemMenuPressed"
+            android:src="@drawable/three_dots"
+            android:background="@color/fui_transparent" />
 
     </LinearLayout>
 

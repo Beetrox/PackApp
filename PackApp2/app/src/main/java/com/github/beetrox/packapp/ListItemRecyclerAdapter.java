@@ -4,8 +4,11 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,10 +20,12 @@ import java.util.List;
 public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecyclerAdapter.ListItemViewHolder> {
 
     private List<ListItem> listItems;
+    private ShowListItems showListItems;
 
 
-    public ListItemRecyclerAdapter(List<ListItem> listItems) {
+    public ListItemRecyclerAdapter(List<ListItem> listItems, ShowListItems showListItems) {
         this.listItems = listItems;
+        this.showListItems = showListItems;
     }
 
     @Override
@@ -29,8 +34,8 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
     }
 
     @Override
-    public void onBindViewHolder(ListItemViewHolder listItemViewHolder, int i) {
-        ListItem listItem = listItems.get(i);
+    public void onBindViewHolder(final ListItemViewHolder listItemViewHolder, int i) {
+        final ListItem listItem = listItems.get(i);
         listItemViewHolder.viewName.setText(listItem.getName());
         listItemViewHolder.viewCategory.setText(listItem.getCategory());
         listItemViewHolder.viewStatus.setText(listItem.getStatus());
@@ -39,7 +44,7 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
 
         Resources resources = listItemViewHolder.itemView.getResources();
         String status = listItem.getStatus();
-        String category = listItem.getCategory();
+        final String category = listItem.getCategory();
 
         if (status.equals("red")) {
             listItemViewHolder.itemView.setBackgroundColor(resources.getColor(R.color.redStatus));
@@ -48,6 +53,36 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
         } else if (status.equals("green")) {
             listItemViewHolder.itemView.setBackgroundColor(resources.getColor(R.color.greenStatus));
         }
+
+        listItemViewHolder.viewMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //creating a popup menu
+                PopupMenu popup = new PopupMenu(showListItems, listItemViewHolder.viewMenu);
+                //inflating menu from xml resource
+                popup.inflate(R.menu.list_item_popup_menu);
+                //adding click listener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.menuListItemReset:
+                                showListItems.resetListItem(listItem.getName().toLowerCase(), category);
+                                break;
+                            case R.id.menuListItemEdit:
+                                showListItems.editListItem(listItem.getName().toLowerCase());
+                                break;
+                            case R.id.menuListItemDelete:
+                                showListItems.deleteListItem(listItem.getName().toLowerCase(), category);
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                //displaying the popup
+                popup.show();
+            }
+        });
     }
 
     @Override
@@ -69,6 +104,7 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
         protected TextView viewCategory;
         protected TextView viewStatus;
         protected Drawable viewBackground;
+        protected ImageButton viewMenu;
 
         public ListItemViewHolder(View view) {
             //make constructor
@@ -78,6 +114,7 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
             viewCategory = view.findViewById(R.id.listItemCategory);
             viewStatus = view.findViewById(R.id.listItemStatus);
             viewBackground = view.getBackground();
+            viewMenu = view.findViewById(R.id.listItemMenu);
         }
     }
 

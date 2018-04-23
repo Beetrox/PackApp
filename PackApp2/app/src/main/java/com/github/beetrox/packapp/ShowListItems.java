@@ -14,14 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +31,7 @@ public class ShowListItems extends FragmentActivity {
     ListItemRecyclerAdapter listItemRecyclerAdapter;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     String currentPackingListName;
+    String currentTab;
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -60,7 +59,7 @@ public class ShowListItems extends FragmentActivity {
         listItemRecyclerView.setLayoutManager(linearLayoutManager);
 
         listItems = new ArrayList<ListItem>();
-        listItemRecyclerAdapter = new ListItemRecyclerAdapter(listItems);
+        listItemRecyclerAdapter = new ListItemRecyclerAdapter(listItems, this);
         listItemRecyclerView.setAdapter(listItemRecyclerAdapter);
 //        ViewPager myViewPager = findViewById(R.id.viewpager);
 
@@ -82,9 +81,9 @@ public class ShowListItems extends FragmentActivity {
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
                 // show the given tab
-                String currentCategory = tab.getText().toString().toLowerCase();
+                currentTab = tab.getText().toString().toLowerCase();
 
-                setUpDatabase(currentCategory, currentPackingListName);
+                setUpDatabase(currentTab, currentPackingListName);
             }
 
             public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -204,13 +203,13 @@ public class ShowListItems extends FragmentActivity {
         //find listItem category and status from listItems to use later
         String category = textViewCategory.getText().toString().toLowerCase();
         String status = textViewStatus.getText().toString().toLowerCase();
-        itemRef = database.getReference().child(userId).child("packingLists").child(currentPackingListName).child("categories").child(category);
+//        itemRef = database.getReference().child(userId).child("packingLists").child(currentPackingListName).child("categories").child(category);
 //        String status = itemRef.child("göteborg").child(category).child(name).child("status").toString();
 //        Resources resources = view.getResources();
         Log.d(TAG, status);
 
-        if (category.equals("clothes") || category.equals("toiletries") || category.equals("electronics") || category.equals("misc")
-                || category.equals(R.string.categoryClothes)) {
+        if (currentTab.equals("clothes") || currentTab.equals("toiletries") || currentTab.equals("electronics") || currentTab.equals("misc")
+                || currentTab.equals(R.string.categoryClothes)) {
             //if in category
             if (status.equals("red")) {
                 itemRef.child(name).child("status").setValue("yellow");
@@ -220,55 +219,67 @@ public class ShowListItems extends FragmentActivity {
         } else {
             //if all
             if (status.equals("red")) {
-                itemRef.getParent().child(category).child(name).child("status").setValue("yellow");
+                itemRef.child(category).child(name).child("status").setValue("yellow");
             } else if (status.equals("yellow")) {
-                itemRef.getParent().child(category).child(name).child("status").setValue("green");
+                itemRef.child(category).child(name).child("status").setValue("green");
             }
         }
-
-//        int newColor;
-//        int oldColor = Color.TRANSPARENT;
-//        Drawable background = view.getBackground();
-//        if (background instanceof ColorDrawable)
-//            oldColor = ((ColorDrawable) background).getColor();
-//
-//        if (oldColor == getResources().getColor(R.color.redStatus)) {
-//            newColor = getResources().getColor(R.color.yellowStatus);
-//        } else {
-//            newColor = getResources().getColor(R.color.greenStatus);
-//        }
-//
-//        view.setBackgroundColor(newColor);
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, view, menuInfo);
+    public void resetListItem(String name, String category) {
 
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.list_item_context_menu, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
-        switch (item.getItemId()) {
-            case R.id.delete_list_item:
-                int position = info.position;
-                ListItem listItem = listItems.get(position);
-                String listItemName = listItem.getName();
-//                String itemName = item.toString();
-                itemRef.child(listItemName.toLowerCase()).removeValue();
-                listItemRecyclerAdapter.notifyDataSetChanged();
-                return true;
-            default:
-                return super.onContextItemSelected(item);
+        if (currentTab.equals("all") || currentTab.equals("alla")) {
+            itemRef.child(category).child(name).child("status").setValue("red");
+        } else {
+            itemRef.child(name).child("status").setValue("red");
         }
+
+        listItemRecyclerAdapter.notifyDataSetChanged();
     }
+
+    public void editListItem(String name) {
+
+    }
+
+    public void deleteListItem(String name, String category) {
+
+        if (currentTab.equals("all") || currentTab.equals("alla")) {
+            itemRef.child(category).child(name).removeValue();
+        } else {
+            itemRef.child(name).removeValue();
+        }
+
+        listItemRecyclerAdapter.notifyDataSetChanged();
+    }
+
+//    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, view, menuInfo);
+//
+//        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+//
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.list_item_context_menu, menu);
+//    }
+//
+//    @Override
+//    public boolean onContextItemSelected(MenuItem item) {
+//
+//        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+//
+//        switch (item.getItemId()) {
+//            case R.id.delete_list_item:
+//                int position = info.position;
+//                ListItem listItem = listItems.get(position);
+//                String listItemName = listItem.getName();
+////                String itemName = item.toString();
+//                itemRef.child(listItemName.toLowerCase()).removeValue();
+//                listItemRecyclerAdapter.notifyDataSetChanged();
+//                return true;
+//            default:
+//                return super.onContextItemSelected(item);
+//        }
+//    }
 
     @Override
     public boolean onNavigateUp(){
