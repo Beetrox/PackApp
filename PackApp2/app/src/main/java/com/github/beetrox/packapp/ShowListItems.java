@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +33,10 @@ public class ShowListItems extends FragmentActivity {
     ListItemRecyclerAdapter listItemRecyclerAdapter;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     String currentPackingListName;
+
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+
+    String userId = auth.getUid();
 //    CardView listItemCardView = findViewById(R.id.listItemCardView);
 //    RecyclerView listItemRecyclerView = (RecyclerView) findViewById(R.id.listItemRecyclerView);
 //    registerForContextMenu(listItemRecyclerView);
@@ -137,10 +142,10 @@ public class ShowListItems extends FragmentActivity {
 
     private void setUpDatabase(final String category, String packingListName) {
 
-        if (category.equals("all")) {
-            itemRef = database.getReference().child("packingLists").child(packingListName).child("categories");
+        if (category.equals("all") || category.equals("alla")) {
+            itemRef = database.getReference().child(userId).child("packingLists").child(packingListName).child("categories");
         } else {
-            itemRef = database.getReference().child("packingLists").child(packingListName).child("categories").child(category);
+            itemRef = database.getReference().child(userId).child("packingLists").child(packingListName).child("categories").child(category);
         }
 
         itemRef.keepSynced(true);
@@ -152,7 +157,7 @@ public class ShowListItems extends FragmentActivity {
 
                 listItems.clear();
 
-                if (category.equals("all")) {
+                if (category.equals("all") || category.equals("alla")) {
                     for (DataSnapshot category : dataSnapshot.getChildren()) {
                         for (DataSnapshot dataSnapshot1 : category.getChildren()) {
 
@@ -161,8 +166,6 @@ public class ShowListItems extends FragmentActivity {
                             //String name1 = value.getName();
                             //packingList.setName(name1);
                             listItems.add(listItem);
-                            listItemRecyclerAdapter.notifyDataSetChanged();
-
                         }
                     }
 
@@ -174,11 +177,14 @@ public class ShowListItems extends FragmentActivity {
                         //PackingList packingList = new PackingList();
                         //String name1 = value.getName();
                         //packingList.setName(name1);
-                        listItems.add(listItem);
-                        listItemRecyclerAdapter.notifyDataSetChanged();
-
+//                        if (listItem != null) {
+                            listItems.add(listItem);
+//                        } else {
+//                            listItems.clear();
+//                        }
                     }
                 }
+                listItemRecyclerAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -198,12 +204,13 @@ public class ShowListItems extends FragmentActivity {
         //find listItem category and status from listItems to use later
         String category = textViewCategory.getText().toString().toLowerCase();
         String status = textViewStatus.getText().toString().toLowerCase();
-        itemRef = database.getReference().child("packingLists").child(currentPackingListName).child("categories").child(category);
+        itemRef = database.getReference().child(userId).child("packingLists").child(currentPackingListName).child("categories").child(category);
 //        String status = itemRef.child("göteborg").child(category).child(name).child("status").toString();
 //        Resources resources = view.getResources();
         Log.d(TAG, status);
 
-        if (category.equals("clothes") || category.equals("toiletries") || category.equals("electronics") || category.equals("misc")) {
+        if (category.equals("clothes") || category.equals("toiletries") || category.equals("electronics") || category.equals("misc")
+                || category.equals(R.string.categoryClothes)) {
             //if in category
             if (status.equals("red")) {
                 itemRef.child(name).child("status").setValue("yellow");

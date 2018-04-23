@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -22,6 +23,10 @@ public class CreateNewListItem extends AppCompatActivity {
     DatabaseReference itemRef;
     Intent intent;
     String currentPackingListName;
+
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+
+    String userId = auth.getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,7 @@ public class CreateNewListItem extends AppCompatActivity {
 
         editListItemName = findViewById(R.id.editListItemName);
         editListItemCategory = findViewById(R.id.categorySpinner);
-        itemRef = database.getReference("packingLists").child(currentPackingListName).child("categories");
+        itemRef = database.getReference().child(userId).child("packingLists").child(currentPackingListName).child("categories");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, getCategories());

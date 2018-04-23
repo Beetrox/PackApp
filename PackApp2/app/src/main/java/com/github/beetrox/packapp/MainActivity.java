@@ -52,16 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        // Log in
-        FirebaseUser user = auth.getCurrentUser();
-        if (user != null) {
-            // already signed in
-        } else {
-            // not signed in
-            AuthUI.SignInIntentBuilder builder = AuthUI.getInstance().createSignInIntentBuilder();
-            builder.setAvailableProviders(providers);
-            startActivityForResult(builder.build(), RC_SIGN_IN);
-        }
+        String userId = auth.getUid();
 
         // Show firebase packing lists
         RecyclerView packingListRecyclerView = (RecyclerView) findViewById(R.id.packingListRecyclerView);
@@ -78,34 +69,45 @@ public class MainActivity extends AppCompatActivity {
         packingListRecyclerAdapter = new PackingListRecyclerAdapter(packingLists);
         packingListRecyclerView.setAdapter(packingListRecyclerAdapter);
 
-        itemRef = database.getReference().child("packingLists");
-        itemRef.keepSynced(true);
+        // Log in
+        FirebaseUser user = auth.getCurrentUser();
+        
+        if (user != null) {
+            // already signed in
+            itemRef = database.getReference().child(userId).child("packingLists");
+            itemRef.keepSynced(true);
 
-        itemRef.addValueEventListener(new ValueEventListener() {
+            itemRef.addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("Main", "onDataChange: ");
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Log.d("Main", "onDataChange: ");
 
-                packingLists.clear();
+                    packingLists.clear();
 
-                //packingLists = new ArrayList<PackingList>();
-                for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()) {
+                    //packingLists = new ArrayList<PackingList>();
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
-                    PackingList packingList = dataSnapshot1.getValue(PackingList.class);
-                    //PackingList packingList = new PackingList();
-                    //String name1 = value.getName();
-                    //packingList.setName(name1);
-                    packingLists.add(packingList);
-                    packingListRecyclerAdapter.notifyDataSetChanged();
+                        PackingList packingList = dataSnapshot1.getValue(PackingList.class);
+                        //PackingList packingList = new PackingList();
+                        //String name1 = value.getName();
+                        //packingList.setName(name1);
+                        packingLists.add(packingList);
+                        packingListRecyclerAdapter.notifyDataSetChanged();
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "Failed to read value.", databaseError.toException());
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w(TAG, "Failed to read value.", databaseError.toException());
+                }
+            });
+        } else {
+            // not signed in
+            AuthUI.SignInIntentBuilder builder = AuthUI.getInstance().createSignInIntentBuilder();
+            builder.setAvailableProviders(providers);
+            startActivityForResult(builder.build(), RC_SIGN_IN);
+        }
     }
 
     @Override
@@ -178,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void packingListPressed(View view) {
-        Log.d("Packing List", "Pressed");
+//        Log.d("Packing List", "Pressed");
 
         intent = new Intent(this, ShowListItems.class);
 
