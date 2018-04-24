@@ -4,8 +4,11 @@
     <item android:id="@+id/menuListItemReset"
         android:title="@string/reset_status" />
 
-    <item android:id="@+id/menuListItemEdit"
-        android:title="@string/edit" />
+    <!--<item android:id="@+id/menuListItemEdit"-->
+        <!--android:title="@string/edit" />-->
+
+    <item android:id="@+id/menuListItemChangeAmount"
+        android:title="@string/changeAmount" />
 
     <item android:id="@+id/menuListItemDelete"
         android:title="@string/delete" />

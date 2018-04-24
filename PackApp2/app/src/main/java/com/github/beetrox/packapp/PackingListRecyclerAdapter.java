@@ -49,10 +49,10 @@ public class PackingListRecyclerAdapter extends RecyclerView.Adapter<PackingList
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.menuPackingListEdit:
+//                            case R.id.menuPackingListEdit:
                                 //handle menu1 click
-                                mainActivity.editPackingList(pl.getName().toLowerCase(), "New name");
-                                break;
+//                                mainActivity.editPackingList(pl.getName().toLowerCase(), "New name");
+//                                break;
                             case R.id.menuPackingListDelete:
                                 //handle menu2 click
                                 mainActivity.deletePackingList(pl.getName().toLowerCase());

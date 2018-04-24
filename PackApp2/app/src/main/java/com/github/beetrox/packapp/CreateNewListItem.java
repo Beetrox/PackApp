@@ -85,7 +85,11 @@ public class CreateNewListItem extends AppCompatActivity {
 
     @Override
     public boolean onNavigateUp(){
-        finish();
+
+        intent = new Intent(this, ShowListItems.class);
+
+        startActivity(intent);
+
         return true;
     }
 }

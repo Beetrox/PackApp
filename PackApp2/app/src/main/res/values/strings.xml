@@ -9,6 +9,7 @@
     <string name="ok">OK</string>
     <string name="name">Name</string>
     <string name="log_out">Log out</string>
+    <string name="confirm">Confirm</string>
     <string name="list_item_name_hint">Name your item</string>
 
     <string name="myPackingLists">My packing lists</string>
@@ -18,6 +19,9 @@
     <string name="listName">List name</string>
     <string name="editReminder">Edit reminder</string>
     <string name="amount">Amount</string>
+    <string name="changeAmount">Change amount</string>
+    <string name="editListItemName">Edit item name</string>
+    <string name="moveToCategory">Move to category</string>
     <string name="namePackingList">Name your packing list</string>
     <string name="addAllItems">Add all items from base list</string>
     <string name="nameListItem">Name your item</string>

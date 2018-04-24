@@ -9,8 +9,9 @@
     <string name="reset_status">Återställ status</string>
     <string name="ok">OK</string>
     <string name="name">Namn</string>
-    <string name="list_item_name_hint">Namnge ditt föremål</string>
     <string name="log_out">Logga ut</string>
+    <string name="confirm">Bekräfta</string>
+    <string name="list_item_name_hint">Namnge ditt föremål</string>
 
     <string name="myPackingLists">Mina packlistor</string>
     <string name="myBaseLists">Mina baslistor</string>
@@ -19,6 +20,9 @@
     <string name="listName">Listans namn</string>
     <string name="editReminder">Ändra påminnelse</string>
     <string name="amount">Antal</string>
+    <string name="changeAmount">Ändra antal</string>
+    <string name="editListItemName">Ändra föremålets namn</string>
+    <string name="moveToCategory">Flytta till kategori</string>
     <string name="namePackingList">Namnge din packlista</string>
     <string name="addAllItems">Lägg till alla föremål från baslistan</string>
     <string name="nameListItem">Namnge ditt föremål</string>

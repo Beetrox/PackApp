@@ -189,12 +189,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void packingListMenuPressed(View view) {
-
-    }
-
     public void editPackingList(String name, String newName) {
-        int i = 0;
+
+        intent = new Intent(this, EditPackingList.class);
+
+        intent.putExtra("packingListName", name);
+
+        startActivity(intent);
     }
 
     public void deletePackingList(String name) {

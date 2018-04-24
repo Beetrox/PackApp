@@ -50,7 +50,12 @@ public class CreateNewPackingList extends AppCompatActivity {
 
     @Override
     public boolean onNavigateUp(){
-        finish();
+
+
+        intent = new Intent(this, MainActivity.class);
+
+        startActivity(intent);
+
         return true;
     }
 }

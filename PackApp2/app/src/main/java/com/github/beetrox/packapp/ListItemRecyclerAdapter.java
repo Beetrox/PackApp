@@ -39,7 +39,7 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
         listItemViewHolder.viewName.setText(listItem.getName());
         listItemViewHolder.viewCategory.setText(listItem.getCategory());
         listItemViewHolder.viewStatus.setText(listItem.getStatus());
-//        listItemViewHolder.vAmount.setText(li.getAmount());
+        listItemViewHolder.viewAmount.setText(Integer.toString(listItem.getAmount()));
 //        listItemViewHolder.viewBackground;
 
         Resources resources = listItemViewHolder.itemView.getResources();
@@ -69,8 +69,11 @@ public class ListItemRecyclerAdapter extends RecyclerView.Adapter<ListItemRecycl
                             case R.id.menuListItemReset:
                                 showListItems.resetListItem(listItem.getName().toLowerCase(), category);
                                 break;
-                            case R.id.menuListItemEdit:
-                                showListItems.editListItem(listItem.getName().toLowerCase());
+//                            case R.id.menuListItemEdit:
+//                                showListItems.editListItem(listItem.getName().toLowerCase());
+//                                break;
+                            case R.id.menuListItemChangeAmount:
+                                showListItems.editListItem(listItem.getName().toLowerCase(), category);
                                 break;
                             case R.id.menuListItemDelete:
                                 showListItems.deleteListItem(listItem.getName().toLowerCase(), category);

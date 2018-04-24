@@ -32,6 +32,7 @@ public class ShowListItems extends FragmentActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     String currentPackingListName;
     String currentTab;
+    Intent intent;
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -226,6 +227,14 @@ public class ShowListItems extends FragmentActivity {
         }
     }
 
+
+//    public void changeAmountButtonPressed() {
+//
+//        intent = new Intent(this, ChangeAmount.class);
+//
+//        startActivity(intent);
+//    }
+
     public void resetListItem(String name, String category) {
 
         if (currentTab.equals("all") || currentTab.equals("alla")) {
@@ -237,8 +246,15 @@ public class ShowListItems extends FragmentActivity {
         listItemRecyclerAdapter.notifyDataSetChanged();
     }
 
-    public void editListItem(String name) {
+    public void editListItem(String name, String category) {
 
+        intent = new Intent(this, ChangeAmount.class);
+
+        intent.putExtra("currentListItemName", name);
+        intent.putExtra("currentListItemCategory", category);
+        intent.putExtra("packingListName", currentPackingListName);
+
+        startActivity(intent);
     }
 
     public void deleteListItem(String name, String category) {
@@ -283,7 +299,11 @@ public class ShowListItems extends FragmentActivity {
 
     @Override
     public boolean onNavigateUp(){
-        finish();
+
+        intent = new Intent(this, MainActivity.class);
+
+        startActivity(intent);
+
         return true;
     }
 }

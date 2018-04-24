@@ -40,7 +40,7 @@ public class ListItem {
         return amount;
     }
 
-    public void setAmount(int Amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
