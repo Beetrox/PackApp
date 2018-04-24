@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -71,41 +72,45 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
 
         if (user != null) {
-            // already signed in
-            itemRef = database.getReference().child(userId).child("packingLists");
-            itemRef.keepSynced(true);
-
-            itemRef.addValueEventListener(new ValueEventListener() {
-
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Log.d("Main", "onDataChange: ");
-
-                    packingLists.clear();
-
-                    //packingLists = new ArrayList<PackingList>();
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-
-                        PackingList packingList = dataSnapshot1.getValue(PackingList.class);
-                        //PackingList packingList = new PackingList();
-                        //String name1 = value.getName();
-                        //packingList.setName(name1);
-                        packingLists.add(packingList);
-                        packingListRecyclerAdapter.notifyDataSetChanged();
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.w(TAG, "Failed to read value.", databaseError.toException());
-                }
-            });
+            setUpDataBase(userId);
         } else {
             // not signed in
             AuthUI.SignInIntentBuilder builder = AuthUI.getInstance().createSignInIntentBuilder();
             builder.setAvailableProviders(providers);
             startActivityForResult(builder.build(), RC_SIGN_IN);
         }
+    }
+
+    public void setUpDataBase(String userId) {
+        // already signed in
+        itemRef = database.getReference().child(userId).child("packingLists");
+        itemRef.keepSynced(true);
+
+        itemRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("Main", "onDataChange: ");
+
+                packingLists.clear();
+
+                //packingLists = new ArrayList<PackingList>();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+
+                    PackingList packingList = dataSnapshot1.getValue(PackingList.class);
+                    //PackingList packingList = new PackingList();
+                    //String name1 = value.getName();
+                    //packingList.setName(name1);
+                    packingLists.add(packingList);
+                }
+                packingListRecyclerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "Failed to read value.", databaseError.toException());
+            }
+        });
     }
 
 //    @Override
@@ -177,6 +182,35 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void mainMenuPressed(View view) {
+        //creating a popup menu
+        PopupMenu popup = new PopupMenu(this, findViewById(R.id.mainMenuMainActivity));
+        //inflating menu from xml resource
+        popup.inflate(R.menu.main_menu);
+        //adding click listener
+        final MainActivity mainActivity = this;
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.signOutMenuOption:
+                        //handle menu2 click
+                        AuthUI.getInstance()
+                                .signOut(mainActivity)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        startMainActivity();
+                                    }
+                                });
+                        break;
+                }
+                return false;
+            }
+        });
+        //displaying the popup
+        popup.show();
+    }
+
     public void packingListPressed(View view) {
 //        Log.d("Packing List", "Pressed");
 
@@ -220,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                setUpDataBase(user.getUid());
                 // ...
             } else {
                 // Sign in failed, check response for error code
