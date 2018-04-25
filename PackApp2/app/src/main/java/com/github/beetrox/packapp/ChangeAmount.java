@@ -26,8 +26,8 @@ public class ChangeAmount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_amount);
 
-//        getActionBar().setHomeButtonEnabled(true);
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String userId = auth.getUid();
