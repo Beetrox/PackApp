@@ -4,9 +4,11 @@
     <string name="app_name">PackApp</string>
     <string name="add">Lägg till</string>
     <string name="delete">Ta bort</string>
+    <string name="deleted">borttagen</string>
     <string name="share">Dela</string>
     <string name="edit">Ändra</string>
     <string name="reset_status">Återställ status</string>
+    <string name="status_reset">status återställd</string>
     <string name="ok">OK</string>
     <string name="name">Namn</string>
     <string name="log_out">Logga ut</string>

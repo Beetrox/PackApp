@@ -3,9 +3,11 @@
     <string name="app_name">PackApp</string>
     <string name="add">Add</string>
     <string name="delete">Delete</string>
+    <string name="deleted">deleted</string>
     <string name="share">Share</string>
     <string name="edit">Edit</string>
     <string name="reset_status">Reset status</string>
+    <string name="status_reset">status reset</string>
     <string name="ok">OK</string>
     <string name="name">Name</string>
     <string name="log_out">Log out</string>

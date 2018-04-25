@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -60,16 +61,25 @@ public class CreateNewListItem extends AppCompatActivity {
 
     public void addListItemButtonPressed(View view) {
 
-        String selected = editListItemCategory.getSelectedItem().toString();
+        String listItemName = editListItemName.getText().toString();
 
-        ListItem listItem = new ListItem(editListItemName.getText().toString(), selected.toLowerCase());
-        itemRef.child(selected.toLowerCase()).child(listItem.getName().toLowerCase()).setValue(listItem);
+        if(listItemName.matches("")) {
+            // editText is empty
+            Toast.makeText(this, "Text field empty", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            // editText is not empty
+            String selected = editListItemCategory.getSelectedItem().toString();
 
-        intent = new Intent(this, ShowListItems.class);
+            ListItem listItem = new ListItem(editListItemName.getText().toString(), selected.toLowerCase());
+            itemRef.child(selected.toLowerCase()).child(listItem.getName().toLowerCase()).setValue(listItem);
 
-        intent.putExtra("packingListName", currentPackingListName);
+            intent = new Intent(this, ShowListItems.class);
 
-        startActivity(intent);
+            intent.putExtra("packingListName", currentPackingListName);
+
+            startActivity(intent);
+        }
     }
 
     private String[] getCategories() {
@@ -87,6 +97,8 @@ public class CreateNewListItem extends AppCompatActivity {
     public boolean onNavigateUp(){
 
         intent = new Intent(this, ShowListItems.class);
+
+        intent.putExtra("packingListName", currentPackingListName);
 
         startActivity(intent);
 

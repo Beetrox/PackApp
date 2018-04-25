@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -243,6 +245,9 @@ public class ShowListItems extends FragmentActivity {
             itemRef.child(name).child("status").setValue("red");
         }
 
+        name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+        Toast.makeText(this, name + " " + getText(R.string.status_reset), Toast.LENGTH_SHORT).show();
+
         listItemRecyclerAdapter.notifyDataSetChanged();
     }
 
@@ -263,7 +268,11 @@ public class ShowListItems extends FragmentActivity {
             itemRef.child(category).child(name).removeValue();
         } else {
             itemRef.child(name).removeValue();
+            return;
         }
+
+        name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+        Toast.makeText(this, name + " " + getText(R.string.deleted), Toast.LENGTH_SHORT).show();
 
         listItemRecyclerAdapter.notifyDataSetChanged();
     }

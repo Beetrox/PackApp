@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -223,18 +225,22 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void editPackingList(String name, String newName) {
-
-        intent = new Intent(this, EditPackingList.class);
-
-        intent.putExtra("packingListName", name);
-
-        startActivity(intent);
-    }
+//    public void editPackingList(String name, String newName) {
+//
+//        intent = new Intent(this, EditPackingList.class);
+//
+//        intent.putExtra("packingListName", name);
+//
+//        startActivity(intent);
+//    }
 
     public void deletePackingList(String name) {
+
         itemRef.child(name).removeValue();
         packingListRecyclerAdapter.notifyDataSetChanged();
+
+        name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+        Toast.makeText(this, name + " " + getText(R.string.deleted), Toast.LENGTH_SHORT).show();
     }
 
     public static List<PackingList> createFakePackingLists() {
@@ -263,15 +269,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void signOutUser(View view) {
-        AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    public void onComplete(@NonNull Task<Void> task) {
-                        startMainActivity();
-                    }
-                });
-    }
+//    public void signOutUser(View view) {
+//        AuthUI.getInstance()
+//                .signOut(this)
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        startMainActivity();
+//                    }
+//                });
+//    }
 
     public void startMainActivity() {
 

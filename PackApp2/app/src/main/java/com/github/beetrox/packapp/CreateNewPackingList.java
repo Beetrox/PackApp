@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -40,12 +41,21 @@ public class CreateNewPackingList extends AppCompatActivity {
 
     public void addPackingListButtonPressed(View view) {
 //        save to database then subscribe to that from main activity
-        PackingList packingList = new PackingList(editPackingListName.getText().toString());
-        itemRef.child(packingList.getName().toLowerCase()).setValue(packingList);
+        String packingListName = editPackingListName.getText().toString();
 
-        intent = new Intent(this, MainActivity.class);
+        if(packingListName.matches("")) {
+            // editText is empty
+            Toast.makeText(this, "Text field empty", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            // editText is not empty
+            PackingList packingList = new PackingList(packingListName);
+            itemRef.child(packingList.getName().toLowerCase()).setValue(packingList);
 
-        startActivity(intent);
+            intent = new Intent(this, MainActivity.class);
+
+            startActivity(intent);
+        }
     }
 
     @Override

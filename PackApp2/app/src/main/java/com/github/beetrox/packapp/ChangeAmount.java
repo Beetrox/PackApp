@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -25,8 +26,8 @@ public class ChangeAmount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_amount);
 
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setHomeButtonEnabled(true);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String userId = auth.getUid();
@@ -47,23 +48,33 @@ public class ChangeAmount extends AppCompatActivity {
 
         EditText changeListItemAmount = findViewById(R.id.changeListItemAmount);
         String newAmount = changeListItemAmount.getText().toString();
-        int newAmountInt = Integer.parseInt(newAmount);
 
-        itemRef.child(listItemName).child("amount").setValue(newAmountInt);
+        if(newAmount.matches("")) {
+            // editText is empty
+            Toast.makeText(this, "Enter a number", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            // editText is not empty
+            int newAmountInt = Integer.parseInt(newAmount);
+
+            itemRef.child(listItemName).child("amount").setValue(newAmountInt);
 
 //        listItemRecyclerAdapter.notifyDataSetChanged();
 
-        intent = new Intent(this, ShowListItems.class);
+            intent = new Intent(this, ShowListItems.class);
 
-        intent.putExtra("packingListName", packingListName);
+            intent.putExtra("packingListName", packingListName);
 
-        startActivity(intent);
+            startActivity(intent);
+        }
     }
 
     @Override
     public boolean onNavigateUp(){
 
         intent = new Intent(this, ShowListItems.class);
+
+        intent.putExtra("packingListName", packingListName);
 
         startActivity(intent);
 
