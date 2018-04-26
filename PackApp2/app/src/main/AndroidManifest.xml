@@ -17,12 +17,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateNewPackingList" />
-        <activity android:name=".CreateNewListItem" />
+        <activity android:name=".CreateNewPackingList"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".CreateNewListItem"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ShowListItems" />
         <activity android:name=".EditListItem" />
         <activity android:name=".EditPackingList" />
-        <activity android:name=".ChangeAmount"></activity>
+        <activity android:name=".ChangeAmount"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>
