@@ -144,11 +144,13 @@ public class ShowListItems extends FragmentActivity {
 
     private void setUpDatabase(final String category, String packingListName) {
 
-        if (category.equals("all") || category.equals("alla")) {
-            itemRef = database.getReference().child(userId).child("packingLists").child(packingListName).child("categories");
-        } else {
-            itemRef = database.getReference().child(userId).child("packingLists").child(packingListName).child("categories").child(category);
-        }
+        itemRef = database.getReference().child(userId).child("packingLists").child(packingListName).child("categories");
+
+//        if (category.equals("all") || category.equals("alla")) {
+//            itemRef = database.getReference().child(userId).child("packingLists").child(packingListName).child("categories");
+//        } else {
+//            itemRef = database.getReference().child(userId).child("packingLists").child(packingListName).child("categories").child(category);
+//        }
 
         itemRef.keepSynced(true);
 
@@ -173,9 +175,11 @@ public class ShowListItems extends FragmentActivity {
 
                 } else {
                     //packingLists = new ArrayList<PackingList>();
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    DataSnapshot categorySnapshot = dataSnapshot.child(category);
 
-                        ListItem listItem = dataSnapshot1.getValue(ListItem.class);
+                    for (DataSnapshot categoryItem : categorySnapshot.getChildren()) {
+
+                        ListItem listItem = categoryItem.getValue(ListItem.class);
                         //PackingList packingList = new PackingList();
                         //String name1 = value.getName();
                         //packingList.setName(name1);
@@ -211,21 +215,10 @@ public class ShowListItems extends FragmentActivity {
 //        Resources resources = view.getResources();
         Log.d(TAG, status);
 
-        if (currentTab.equals("clothes") || currentTab.equals("toiletries") || currentTab.equals("electronics") || currentTab.equals("misc")
-                || currentTab.equals(R.string.categoryClothes)) {
-            //if in category
-            if (status.equals("red")) {
-                itemRef.child(name).child("status").setValue("yellow");
-            } else if (status.equals("yellow")) {
-                itemRef.child(name).child("status").setValue("green");
-            }
-        } else {
-            //if all
-            if (status.equals("red")) {
-                itemRef.child(category).child(name).child("status").setValue("yellow");
-            } else if (status.equals("yellow")) {
-                itemRef.child(category).child(name).child("status").setValue("green");
-            }
+        if (status.equals("red")) {
+            itemRef.child(category).child(name).child("status").setValue("yellow");
+        } else if (status.equals("yellow")) {
+            itemRef.child(category).child(name).child("status").setValue("green");
         }
     }
 
@@ -239,11 +232,7 @@ public class ShowListItems extends FragmentActivity {
 
     public void resetListItem(String name, String category) {
 
-        if (currentTab.equals("all") || currentTab.equals("alla")) {
-            itemRef.child(category).child(name).child("status").setValue("red");
-        } else {
-            itemRef.child(name).child("status").setValue("red");
-        }
+        itemRef.child(category).child(name).child("status").setValue("red");
 
         name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
         Toast.makeText(this, name + " " + getText(R.string.status_reset), Toast.LENGTH_SHORT).show();
@@ -264,12 +253,7 @@ public class ShowListItems extends FragmentActivity {
 
     public void deleteListItem(String name, String category) {
 
-        if (currentTab.equals("all") || currentTab.equals("alla")) {
-            itemRef.child(category).child(name).removeValue();
-        } else {
-            itemRef.child(name).removeValue();
-            return;
-        }
+        itemRef.child(category).child(name).removeValue();
 
         name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
         Toast.makeText(this, name + " " + getText(R.string.deleted), Toast.LENGTH_SHORT).show();
